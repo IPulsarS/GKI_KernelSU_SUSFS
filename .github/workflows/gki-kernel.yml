@@ -172,7 +172,7 @@ jobs:
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
           git clone https://github.com/WildPlusKernel/kernel_patches.git
           # Sukisu的补丁仓库
-          git clone https://github.com/ShirkNeko/SukiSU_patch.git
+          git clone https://github.com/IPulsarS/SukiSU_patch.git
           # next修复补丁
           git clone https://github.com/zzh20188/GKI_KernelSU_SUSFS.git zzh_patch
           
@@ -378,8 +378,10 @@ jobs:
             patch -p1 -F 3 < scope_min_manual_hooks_v1.4.patch
           elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
             echo "Applying hooks for SukiSU..."
-            cp ../../kernel_patches/next/scope_min_manual_hooks_v1.4.patch ./
-            patch -p1 -F 3 < scope_min_manual_hooks_v1.4.patch
+            cp ../../SukiSU_patch/hooks/new_hooks.patch ./
+            cp ../../SukiSU_patch/hooks/0001-KernelSU-Support-tracepoint-hook-type.patch ./
+            patch -p1 -F 3 < new_hooks.patch
+            patch -p1 -F 3 < 0001-KernelSU-Support-tracepoint-hook-type.patch
           fi
       
       - name: 升级LZ4至1.10.0
